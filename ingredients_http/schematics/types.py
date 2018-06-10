@@ -11,13 +11,13 @@ class KubeName(StringType):
 
     def __init__(self, **kwargs):
         super().__init__(max_length=63, **kwargs)
-        self.k8s_reg = re.compile('^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$')
+        self.k8s_reg = re.compile('^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$')
 
     def validate_kube(self, value, context=None):
         if self.k8s_reg.match(value) is None:
             raise ValidationError("must consist of lower case alphanumeric characters, '-' or '.', and must start and "
                                   "end with an alphanumeric character (e.g. 'example.com', regex used for validation "
-                                  "is '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?')")
+                                  "is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*')")
 
 
 class KubeString(StringType):

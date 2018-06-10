@@ -1,3 +1,4 @@
+import datetime
 import enum
 import ipaddress
 import json
@@ -62,6 +63,8 @@ class HTTPApplication(object):
                 return str(o)
             if isinstance(o, enum.Enum):
                 return o.value
+            if isinstance(o, datetime.datetime):
+                return o.isoformat()
 
             return old_json_encoder(self, o)
 
