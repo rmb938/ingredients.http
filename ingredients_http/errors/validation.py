@@ -21,8 +21,11 @@ def json_errors_to_json(validation_errors, root=None):
                 })
             elif isinstance(value, FrozenDict):
                 for k in value.keys():
-                    for field in value[k].keys():
-                        json_errors.extend(json_errors_to_json({str(k): value[k][field]}, root=root + "/" + key))
+                    if isinstance(value[k], dict):
+                        for field in value[k].keys():
+                            json_errors.extend(json_errors_to_json({str(k): value[k][field]}, root=root + "/" + key))
+                    else:
+                        json_errors.extend(json_errors_to_json({str(k): value[k]}, root=root+"/"+key))
             else:
                 for error in value:
                     json_errors.append({
