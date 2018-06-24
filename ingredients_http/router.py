@@ -34,14 +34,14 @@ class Router(object):
         self.logger.debug(
             "Registering route " + complete_uri + " with action " + action.__name__ + " and allowed methods " + str(
                 method_names))
-        
+
         self.on_register(complete_uri, action, methods)
         dispatcher.connect(self.__module__ + "." + self.__class__.__name__ + "." + action.__name__,
                            complete_uri, controller=self, action=action.__name__, conditions=dict(method=method_names))
 
     def on_register(self, uri: str, action: Callable, methods: List[RequestMethods]):
         pass
-        
+
     def setup_routes(self, dispatcher: cherrypy.dispatch.RoutesDispatcher, uri_prefix: str):
 
         for member in [getattr(self, attr) for attr in dir(self)]:
