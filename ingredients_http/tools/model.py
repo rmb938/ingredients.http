@@ -56,10 +56,12 @@ def model_out(cls=None):
     cherrypy.serving.response.headers['Content-Type'] = 'application/json'
 
 
-def model_out_pagination(cls=None):
+def model_out_pagination(cls=None, list_name=None):
     def model_handler(*args, **kwargs):
-
-        list_name = cherrypy.serving.request.path_info.split("/")[-1]
+        nonlocal list_name
+        
+        if list_name is None:
+            list_name = cherrypy.serving.request.path_info.split("/")[-1]
         data = {
             list_name: []
         }
