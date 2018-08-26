@@ -59,7 +59,7 @@ def model_out(cls=None):
 def model_out_pagination(cls=None, list_name=None):
     def model_handler(*args, **kwargs):
         nonlocal list_name
-        
+
         if list_name is None:
             list_name = cherrypy.serving.request.path_info.split("/")[-1]
         data = {
