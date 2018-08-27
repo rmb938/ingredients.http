@@ -31,6 +31,8 @@ class ApplicationMount(object):
             else:
                 for name, obj in inspect.getmembers(module):
                     if inspect.isclass(obj) and issubclass(obj, Router) and obj is not Router:
+                        if obj.__dict__.get('__metaclass__') is not None:
+                            continue
                         self.logger.debug("Found Router Object: " + obj.__name__)
                         router = obj()
                         routers.append(router)
