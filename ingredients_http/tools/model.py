@@ -2,7 +2,8 @@ import logging
 from urllib.parse import urlencode
 
 import cherrypy
-from cherrypy._cpcompat import ntou, json_decode, json_encode
+from cherrypy import _json as json
+from cherrypy._cpcompat import ntou
 from cherrypy.lib.jsontools import json_in
 from schematics import Model
 from schematics.exceptions import DataError
@@ -17,9 +18,9 @@ def model_in(cls):
             raise cherrypy.HTTPError(411)
         body = entity.fp.read()
         with cherrypy.HTTPError.handle(ValueError, 400, 'Invalid JSON document'):
-            json = json_decode(body.decode('utf-8'))
+            model_json = json.decode(body.decode('utf-8'))
         try:
-            model = cls(json)
+            model = cls(model_json)
             model.validate()
         except DataError as e:
             raise PayloadValidationError(e)
@@ -46,7 +47,7 @@ def model_out(cls=None):
                 cherrypy.log.error('Error with model_out response', severity=logging.ERROR, traceback=True)
                 raise
 
-        return json_encode(value.to_native())
+        return json.encode(value.to_native())
 
     request = cherrypy.serving.request
     if request.handler is None:  # pragma: no cover

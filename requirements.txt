@@ -1,4 +1,4 @@
-cherrypy>=13.1.0 # BSD-3-Clause
+cherrypy>=18.0.1 # BSD-3-Clause
 Routes>=2.4.1 # MIT
 schematics>=2.0.1 # BSD 3-clause
 simple-settings>=0.12.0 # MIT
