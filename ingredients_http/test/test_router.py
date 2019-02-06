@@ -3,6 +3,7 @@ import webtest
 
 from ingredients_http.app import HTTPApplication
 from ingredients_http.app_mount import ApplicationMount
+from ingredients_http.test.base import LOGGING_CONFIG
 
 
 class TWebApplication(HTTPApplication):
@@ -26,11 +27,11 @@ class TMountWithRoutes(ApplicationMount):
 
 class TestWebApplication(object):
     def test_no_mounts(self):
-        app = TWebApplication()
+        app = TWebApplication(logging_config=LOGGING_CONFIG)
         app.setup()
 
     def test_mount_bad_route_location(self):
-        app = TWebApplication()
+        app = TWebApplication(logging_config=LOGGING_CONFIG)
 
         app.register_mount(TMountBad(app))
 
@@ -38,7 +39,7 @@ class TestWebApplication(object):
             app.setup()
 
     def test_mount_no_routes(self):
-        app = TWebApplication()
+        app = TWebApplication(logging_config=LOGGING_CONFIG)
 
         app.register_mount(TMountNoRoutes(app))
         app.setup()
@@ -47,7 +48,7 @@ class TestWebApplication(object):
         test_app.get("/", status=404)
 
     def test_mount_with_routes(self):
-        app = TWebApplication()
+        app = TWebApplication(logging_config=LOGGING_CONFIG)
 
         app.register_mount(TMountWithRoutes(app))
         app.setup()
