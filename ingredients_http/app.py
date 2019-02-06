@@ -1,12 +1,6 @@
-import datetime
-import enum
-import ipaddress
-import json
 import logging
 import logging.config
-import uuid
 
-import arrow
 import cherrypy
 from simple_settings import settings, LazySettings
 
@@ -49,26 +43,6 @@ class HTTPApplication(object):
         settings.configure(**default_settings.as_dict())
         settings._initialized = False
         settings.setup()
-
-        old_json_encoder = json.JSONEncoder.default
-
-        def json_encoder(self, o):  # pragma: no cover
-            if isinstance(o, uuid.UUID):
-                return str(o)
-            if isinstance(o, arrow.Arrow):
-                return o.isoformat()
-            if isinstance(o, ipaddress.IPv4Network):
-                return str(o)
-            if isinstance(o, ipaddress.IPv4Address):
-                return str(o)
-            if isinstance(o, enum.Enum):
-                return o.value
-            if isinstance(o, datetime.datetime):
-                return o.isoformat()
-
-            return old_json_encoder(self, o)
-
-        json.JSONEncoder.default = json_encoder
 
         # setup basic logging
         self.__setup_logging()

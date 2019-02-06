@@ -27,10 +27,6 @@ LOGGING_CONFIG = {
             'level': LOGGING_LEVEL,
             'handlers': ['console']
         },
-        'ingredients_db': {
-            'level': LOGGING_LEVEL,
-            'handlers': ['console']
-        },
         'cherrypy.access': {
             'level': 'INFO',
             'handlers': ['console']

@@ -1,19 +1,19 @@
 language: python
 python:
-- '3.6'
+  - '3.6'
 env:
-- TOXENV=py36
-- TOXENV=flake8
-- TOXENV=build
+  - TOXENV=py36
+  - TOXENV=flake8
+  - TOXENV=build
 install:
-- pip install tox
+  - pip install tox
 script: tox
 deploy:
   provider: pypi
   distributions: bdist_wheel
   user: rmb938
   password:
-    secure: v2tEOKDSizisam4Uc1FqqFaRr//qNzxxE06t4ETL8/EcFx2lzTfF4OlOCJGKjm1g9DDjojFEtbMS3rCEIwi8eCf9y6Iv0J5xOFpkuzlbGIPuW/cXLn+RYpUH/6skAsdygKQDuyAKxVp1srdQ9Hp+I9TfZO9rte1Isq8kmF5MxiTMfq6bbFcysfhYu4BIv+/+7KgExJtQRr0TOYTNhchGMiQGFkJzFbq4Fwuz8MWlvBd4BArC4fRxYxSZfPtuPkHKmnTVl6vrdg8hcr/uHv9WO3xO4i8MRDbvXKFYT1WaWjFsM4a2P3uorJ5DRF8xza9du+hhF1+AV6NjsvymLL7tdyJbS79BDnynIxT7D1+pBqnZKik4liL2DBbzO5Mq0JELJf5lF1UnTQopmemzg7VnnSwh2NZndHDaXmSWnWBfjlZkWRTAuvBH6ZFw/N7bAH3/LxOxM5Gr1b35CBYW/tLMq1XnN4WGKZ8Mv1gJO2OpDHduUD08+TNuqZaROg9jqfQuL0iD3D5nqn1ULp6ONnko6ibq1/OgsqU9T3yrSx72dhukISVY7zd+qtEkTs+CCGo2utTr4CZPMpFdwiJs2FXAYOrkpcYGHXK7YRqg+3gCalZh7uM4W+MNgvWqb7hQab/qzbeLU+NyYoUQQp+9x5SGB+Xhn8XJzjRqbzAkwoVBi9Q=
+    secure: LR2FoX6RogFh8taoFIJlhBNx5gwnSR+fwNVAiYa5nzOqeC3Zx/u81UeomA1YQa/6eSBGR4wzNmMsW+RYQkgfWwG7JYDG2bzzWVtC7jP1AYgKC6qZZ8H1P2YQQuFy+4lHo8Ejyc4MF17GhGX0n2+KYeoe/JNwhGJCP/h7VLQvxPaPULZwH2qGH5yNM0LGYqurYvKmIuCNYlBveaCmSApDsi8TAQXBgvHI4LJfKo7Z4DQzqBT2M8XEZMYJ0rhxn9jwlMOswBLJ4IlgQHKTYpOsvfNAf3raYguWuU5MVSL44o2wXMKiESlN3KbAzE5aW0zUx94CqUY0xj39FD4LyHCPe3NIUW4h1iiNS7wZAIgQsFTu60qHq4BDVhmfsMG+csd4JvqGTu6HiUPOJ9Gn+TNzSKnkE6IOz7LJZ7iyUEsaVelQgzrdh/gycGu2lmUliVF+apN3jQnaBq63iJ8NYT53xWIxH8WgaCk7NAxq9RAxHbnBhwy6WB22ZMyE3niIXa82eG3adU26XYuK3cHXTVVGKIebT1BGWBxGDy+GF4DnETS2/SjmYBnpPbM4sn+WxlNoQJkFQU19/Xnt2WgqBH5VYxybg8yjuO70TE0MrQpyQwtvHdhkcGHVEdU/B4Lg3lBiZn3GSw7yleSMct+JIZjUEFJ9xWjF1MzD3B6l43fL9GE="
   on:
     tags: true
     condition: $TOXENV = build
