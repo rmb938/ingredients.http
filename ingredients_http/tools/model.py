@@ -98,7 +98,7 @@ def model_out_pagination(cls=None, list_name=None):
                 }
             ]
 
-        return json_encode(data)
+        return json.encode(data)
 
     request = cherrypy.serving.request
     if request.handler is None:  # pragma: no cover
