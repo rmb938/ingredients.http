@@ -20,7 +20,8 @@ class HTTPApplication(object):
         self.__mounts.append(mount)
 
     def __setup_logging(self):
-        logging.config.dictConfig(self.logging_config)
+        if self.logging_config is not None:
+            logging.config.dictConfig(self.logging_config)
 
     def __setup_mounts(self):
         config = {}
