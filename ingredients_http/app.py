@@ -2,15 +2,16 @@ import logging
 import logging.config
 
 import cherrypy
-from simple_settings import settings, LazySettings
 
 from ingredients_http.tools.model import model_in, model_out, model_out_pagination
 from ingredients_http.tools.param_validation import model_params
 
 
 class HTTPApplication(object):
-    def __init__(self):
+    def __init__(self, logging_config, debug=False):
         self.logger = logging.getLogger("%s.%s" % (self.__module__, self.__class__.__name__))
+        self.logging_config = logging_config
+        self.debug = debug
 
         self.database = None
         self.__mounts = []
@@ -19,7 +20,7 @@ class HTTPApplication(object):
         self.__mounts.append(mount)
 
     def __setup_logging(self):
-        logging.config.dictConfig(settings.LOGGING_CONFIG)
+        logging.config.dictConfig(self.logging_config)
 
     def __setup_mounts(self):
         config = {}
@@ -38,19 +39,13 @@ class HTTPApplication(object):
         cherrypy.tools.model_out_pagination = cherrypy.Tool('before_handler', model_out_pagination)
 
     def setup(self):
-
-        default_settings = LazySettings('ingredients_http.conf.default_settings')
-        settings.configure(**default_settings.as_dict())
-        settings._initialized = False
-        settings.setup()
-
         # setup basic logging
         self.__setup_logging()
 
-        if settings.DEBUG:
-            self.logger.warning("==========================================================================")
-            self.logger.warning("RUNNING IN DEBUG MODE. SET THE ENVIRONMENT VARIABLE PRODUCTION TO DISABLE.")
-            self.logger.warning("==========================================================================")
+        if self.debug:
+            self.logger.warning("==================================================================")
+            self.logger.warning("RUNNING IN DEBUG MODE. DO NOT DO THIS WHILE RUNNING IN PRODUCTION.")
+            self.logger.warning("==================================================================")
 
         # setup tools
         self.__setup_tools()

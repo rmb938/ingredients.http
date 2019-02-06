@@ -1,8 +1,6 @@
-import os
 from abc import ABCMeta, abstractmethod
 
 import pytest
-from simple_settings import settings
 from webtest import TestApp
 
 
@@ -17,14 +15,8 @@ class APITestCase(object):
     def setup_mounts(self, app):
         pass
 
-    @abstractmethod
-    def settings_module(self) -> str:
-        raise NotImplementedError
-
     @pytest.yield_fixture()
     def app(self):
-        os.environ['settings'] = self.settings_module()
-        settings._dict = {}  # Reset settings for every test
         app = self.app_cls()()
         self.setup_mounts(app)
 

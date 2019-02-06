@@ -1,5 +1,3 @@
-import os
-
 import pytest
 import webtest
 
@@ -26,19 +24,12 @@ class TMountWithRoutes(ApplicationMount):
         super().__init__(app=app, mount_point='/', routers_location='routes.with')
 
 
-@pytest.fixture
-def settings():
-    os.environ['settings'] = "ingredients_http.test.settings.application_settings"
-    from simple_settings import settings
-    settings._dict = {}  # Reset settings for every test
-
-
 class TestWebApplication(object):
-    def test_no_mounts(self, settings):
+    def test_no_mounts(self):
         app = TWebApplication()
         app.setup()
 
-    def test_mount_bad_route_location(self, settings):
+    def test_mount_bad_route_location(self):
         app = TWebApplication()
 
         app.register_mount(TMountBad(app))
@@ -46,7 +37,7 @@ class TestWebApplication(object):
         with pytest.raises(ImportError):
             app.setup()
 
-    def test_mount_no_routes(self, settings):
+    def test_mount_no_routes(self):
         app = TWebApplication()
 
         app.register_mount(TMountNoRoutes(app))
@@ -55,7 +46,7 @@ class TestWebApplication(object):
         test_app = webtest.TestApp(app.wsgi_application)
         test_app.get("/", status=404)
 
-    def test_mount_with_routes(self, settings):
+    def test_mount_with_routes(self):
         app = TWebApplication()
 
         app.register_mount(TMountWithRoutes(app))

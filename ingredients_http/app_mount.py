@@ -8,7 +8,6 @@ import pkgutil
 from typing import List, Dict
 
 import cherrypy
-from simple_settings import settings
 
 from ingredients_http.router import Router
 
@@ -81,7 +80,7 @@ class ApplicationMount(object):
         cherrypy.response.headers['Content-Type'] = 'application/json'
         data = {'status': status, 'message': message, 'method': cherrypy.request.method}
 
-        if settings.DEBUG and status.startswith('5'):
+        if self.app.debug and status.startswith('5'):
             # Only show traceback when debugging and during a 5xx error. All other errors are considered intentional.
             data['traceback'] = traceback
 

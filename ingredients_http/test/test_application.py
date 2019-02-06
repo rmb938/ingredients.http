@@ -15,9 +15,6 @@ class TMountAppRoutes(ApplicationMount):
 
 
 class TestApplication(APITestCase):
-    def settings_module(self) -> str:
-        return "ingredients_http.test.settings.application_settings"
-
     def app_cls(self):
         return TWebApplication
 
